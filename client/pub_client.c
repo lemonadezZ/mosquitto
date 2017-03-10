@@ -53,6 +53,8 @@ static char *password = NULL;
 static bool disconnect_sent = false;
 static bool quiet = false;
 
+
+//连接后回调
 void my_connect_callback(struct mosquitto *mosq, void *obj, int result)
 {
 	int rc = MOSQ_ERR_SUCCESS;
@@ -99,12 +101,12 @@ void my_connect_callback(struct mosquitto *mosq, void *obj, int result)
 		}
 	}
 }
-
+//断开连接回调
 void my_disconnect_callback(struct mosquitto *mosq, void *obj, int rc)
 {
 	connected = false;
 }
-
+//发布回调
 void my_publish_callback(struct mosquitto *mosq, void *obj, int mid)
 {
 	last_mid_sent = mid;
@@ -118,7 +120,7 @@ void my_publish_callback(struct mosquitto *mosq, void *obj, int mid)
 		disconnect_sent = true;
 	}
 }
-
+//日志回调
 void my_log_callback(struct mosquitto *mosq, void *obj, int level, const char *str)
 {
 	printf("%s\n", str);
@@ -155,7 +157,7 @@ int load_stdin(void)
 
 	return 0;
 }
-
+//加载配置文件
 int load_file(const char *filename)
 {
 	long pos, rlen;
@@ -197,7 +199,7 @@ int load_file(const char *filename)
 	fclose(fptr);
 	return 0;
 }
-
+//打印使用文档
 void print_usage(void)
 {
 	int major, minor, revision;
@@ -286,7 +288,7 @@ void print_usage(void)
 #endif
 	printf("\nSee http://mosquitto.org/ for more information.\n\n");
 }
-
+//主入口文件
 int main(int argc, char *argv[])
 {
 	struct mosq_config cfg;
@@ -418,11 +420,7 @@ int main(int argc, char *argv[])
 					mosquitto_disconnect(mosq);
 					disconnect_sent = true;
 				}
-#ifdef WIN32
-				Sleep(100);
-#else
 				usleep(100000);
-#endif
 			}
 			rc = MOSQ_ERR_SUCCESS;
 		}else{

@@ -6,5 +6,8 @@
 - os centos7
 
 ### 工具
-- ctags  
+- ctags 
+
+### 常见备注
+- ln -s /usr/local/lib/libmosquitto.so.1 /usr/lib/libmosquitto.so.1  动态链接库不存在的问题
 
