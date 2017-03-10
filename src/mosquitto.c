@@ -213,6 +213,7 @@ void handle_sigusr2(int signal)
 
 int main(int argc, char *argv[])
 {
+//主入口文件
 	mosq_sock_t *listensock = NULL;
 	int listensock_count = 0;
 	int listensock_index = 0;
